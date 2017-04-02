@@ -20,25 +20,41 @@ public class CompositeGObject extends GObject {
 
 	public void remove(GObject gObject) {
 		// TODO: Implement this method.
+		gObjects.remove(gObject);
 	}
 
 	@Override
 	public void move(int dX, int dY) {
 		// TODO: Implement this method.
+		for(GObject g : gObjects){
+			g.x += dX - g.x;
+			g.y += dY - g.y;
+		}
+		
+		x = dX; 
+		y = dY;
 	}
 	
 	public void recalculateRegion() {
 		// TODO: Implement this method.
+		for(GObject g : gObjects){
+			
+		}
+		
 	}
 
 	@Override
 	public void paintObject(Graphics g) {
 		// TODO: Implement this method.
+		for (GObject gob : gObjects){
+			gob.paintObject(g);
+		}
 	}
 
 	@Override
 	public void paintLabel(Graphics g) {
 		// TODO: Implement this method.
+		g.drawString("Composite", x, y+height+20);
 	}
 	
 }
