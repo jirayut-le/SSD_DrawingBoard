@@ -90,17 +90,20 @@ public class DrawingBoard extends JPanel {
 
 		private void deselectAll() {
 			// TODO: Implement this method.
+			for( GObject g : gObjects ){
+				g.deselected();
+			}
+			target = null;
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			System.err.println("press");
-			for( GObject g : gObjects ){
-				g.deselected();
-			}
-			for( GObject g : gObjects ){
-				if(g.pointerHit(e.getX(), e.getY())){
-					g.selected();
+			deselectAll();
+			for(int i = gObjects.size()-1 ; i >= 0 ; i-- ){
+				if(gObjects.get(i).pointerHit(e.getX(), e.getY())){
+					gObjects.get(i).selected();
+					target = gObjects.get(i)  ;
 					break;
 				}		
 			}
