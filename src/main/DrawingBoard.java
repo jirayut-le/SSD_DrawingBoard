@@ -92,10 +92,7 @@ public class DrawingBoard extends JPanel {
 
 	class MAdapter extends MouseAdapter {
 
-		// TODO: You need some variables here
-
 		private void deselectAll() {
-			// TODO: Implement this method.
 			for( GObject g : gObjects ){
 				g.deselected();
 			}

@@ -24,12 +24,8 @@ public class CompositeGObject extends GObject {
 
 	@Override
 	public void move(int dX, int dY) {
-		for (GObject g : gObjects){
-			g.x += dX -x;
-			g.y += dY -y;
-		}
-		x = dX; 
-		y = dY;
+		for (GObject g : gObjects)
+			g.move(dX, dY);
 	}
 	
 	public void recalculateRegion() {	

@@ -46,8 +46,8 @@ public abstract class GObject {
 	public void move(int dX, int dY) {
 		this.x += dX -x;
 		this.y += dY -y;
-		x = dX; 
-		y = dY;
+//		x = dX; 
+//		y = dY;
 	}
 
 	public final void paint(Graphics g) {
