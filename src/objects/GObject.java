@@ -28,8 +28,10 @@ public abstract class GObject {
 
 
 	public boolean pointerHit(int pointerX, int pointerY) {
-		if(this.x+width >= pointerX && this.y+height >= pointerY)
+		if( (pointerX >= this.x && pointerX <= this.x+width) &&
+				(pointerY >= this.y && pointerY <= this.y+height)){
 			return true;
+		}
 		return false;
 	}
 	
@@ -42,8 +44,10 @@ public abstract class GObject {
 	}
 	
 	public void move(int dX, int dY) {
-		this.x = dX;
-		this.y = dY;
+		this.x += dX -x;
+		this.y += dY -y;
+		x = dX; 
+		y = dY;
 	}
 
 	public final void paint(Graphics g) {

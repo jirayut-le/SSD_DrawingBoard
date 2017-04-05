@@ -1,6 +1,5 @@
 package objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,36 +15,44 @@ public class CompositeGObject extends GObject {
 
 	public void add(GObject gObject) {
 		gObjects.add(gObject);
+		recalculateRegion();	
 	}
 
 	public void remove(GObject gObject) {
-		// TODO: Implement this method.
 		gObjects.remove(gObject);
 	}
 
 	@Override
 	public void move(int dX, int dY) {
-		// TODO: Implement this method.
-		for(GObject g : gObjects){
-			g.x += dX - g.x;
-			g.y += dY - g.y;
+		for (GObject g : gObjects){
+			g.x += dX -x;
+			g.y += dY -y;
 		}
-		
 		x = dX; 
 		y = dY;
 	}
 	
-	public void recalculateRegion() {
-		// TODO: Implement this method.
+	public void recalculateRegion() {	
+		int maxWidth = 0;
+		int maxHeight = 0;
+		GObject current = gObjects.get(0);
+		int minWidth = current.x;
+		int minHeight = current.y;
+	
 		for(GObject g : gObjects){
-			
-		}
-		
+			if ( g.x + g.width > maxWidth) maxWidth = g.x + g.width;
+			if ( g.x < minWidth) minWidth = g.x;
+			if ( g.y + g.height > maxHeight) maxHeight = g.y + g.height;
+			if ( g.y < minHeight) minHeight = g.y;
+		}	
+		super.x = minWidth;
+		super.y = minHeight;
+		super.height = maxHeight - minHeight;
+		super.width = maxWidth - minWidth;
 	}
 
 	@Override
 	public void paintObject(Graphics g) {
-		// TODO: Implement this method.
 		for (GObject gob : gObjects){
 			gob.paintObject(g);
 		}
@@ -53,7 +60,6 @@ public class CompositeGObject extends GObject {
 
 	@Override
 	public void paintLabel(Graphics g) {
-		// TODO: Implement this method.
 		g.drawString("Composite", x, y+height+20);
 	}
 	

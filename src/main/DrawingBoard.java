@@ -31,9 +31,15 @@ public class DrawingBoard extends JPanel {
 	public void groupAll() {
 		CompositeGObject group = new CompositeGObject();
 		for(GObject g : gObjects ){
-			group.add(g);
-			gObjects.remove(g);
+			if(g instanceof CompositeGObject ){			
+				group = (CompositeGObject)g;
+			} else {
+				g.deselected();
+				group.add(g);
+			}
 		}
+		group.recalculateRegion();	 
+		gObjects.clear();
 		gObjects.add(group);
 		repaint();
 	}
@@ -94,11 +100,11 @@ public class DrawingBoard extends JPanel {
 				g.deselected();
 			}
 			target = null;
+			repaint();
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			System.err.println("press");
 			deselectAll();
 			for(int i = gObjects.size()-1 ; i >= 0 ; i-- ){
 				if(gObjects.get(i).pointerHit(e.getX(), e.getY())){
@@ -112,13 +118,11 @@ public class DrawingBoard extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			System.out.println("Drag");
 			for( GObject g : gObjects ){
 				if(g.isSelected()){
-					g.move(e.getX(), e.getY());
+					g.move(e.getX(),e.getY());
 					break;
 				}
-
 			}
 			repaint();
 		}
